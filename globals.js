@@ -1,0 +1,28 @@
+export const themes = {
+  dark: {
+    mainBackground: "#111111",
+    card: "#1D1D22",
+    text: "#ffffff",
+    lightText: "#cbcbcf",
+    profileHover: "#26262a",
+    buttonPrimary: "#237BFF",
+    buttonPrimaryText: "#ffffff",
+    buttonPrimaryHoverBackground: "#3f8cff",
+    buttonPrimaryHoverText: "#ffffff",
+    buttonSecondary: "#1E1E1E",
+    buttonSecondaryText: "#cbcbcf",
+    buttonSecondaryBorder: "#cbcbcf",
+    buttonSecondaryHoverBackground: "#cbcbcf",
+    buttonSecondaryHoverText: "#1E1E1E",
+  },
+  light: {
+    mainBackground: "red",
+    card: "blue",
+    text: "#ffffff",
+    lightText: "#cbcbcf",
+    profileHover: "#26262a",
+    buttonPrimary: "#237BFF",
+    buttonSecondary: "#1E1E1E",
+    buttonSecondaryBorder: "#cbcbcf",
+  },
+};
