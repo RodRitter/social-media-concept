@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Panel from "../components/Panel";
+import Button from "../components/Button";
 import BadgeProfile from "../components/BadgeProfile";
 
 const LargeBadgeProfile = styled(BadgeProfile)`
@@ -15,26 +16,28 @@ const CardHeading = styled.h2`
     margin: 5px 10px 20px 10px;
 `;
 
-const GroupList = () => {
+const RecentSignUps = () => {
     return (
         <Panel>
-            <CardHeading>Groups</CardHeading>
+            <CardHeading>New to the family</CardHeading>
 
             <LargeBadgeProfile
                 size="lg"
                 img="/img/profile-1.jpg"
-                topText="Gaming"
-                bottomText="24 members"
+                topText="John Doe"
+                bottomText="@johndoe"
+                onClick={() => {}}
             />
 
             <LargeBadgeProfile
                 size="lg"
                 img="/img/profile-1.jpg"
-                topText="Coding"
-                bottomText="99 members"
+                topText="John Doe"
+                bottomText="@johndoe"
+                onClick={() => {}}
             />
         </Panel>
     );
 };
 
-export default GroupList;
+export default RecentSignUps;

@@ -11,7 +11,7 @@ const TextAreaStyled = styled.textarea`
     line-height: 1.5rem;
 `;
 
-const TextArea = ({ placeholder, className }) => {
+const TextArea = ({ placeholder, onChange, className }) => {
     const [value, setValue] = useState("");
     const { theme } = useTheme();
     const textAreaRef = useRef();
@@ -29,6 +29,7 @@ const TextArea = ({ placeholder, className }) => {
 
     const onTextChange = (event) => {
         setValue(event.target.value);
+        onChange(event.target.value);
         resizeToFit();
     };
 

@@ -2,14 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { useTheme } from "../lib/ThemeProvider";
 import { themes } from "../globals";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 import Header from "../containers/Header";
-import CreatePost from "../containers/CreatePost";
-import FriendList from "../containers/FriendList";
-import GroupList from "../containers/GroupList";
-
-import Panel from "../components/Panel";
-import BadgeProfile from "../components/BadgeProfile";
+import LoggedFeed from "../containers/LoggedFeed";
+import PublicFeed from "../containers/PublicFeed";
 
 const FeedWrapper = styled.div`
     background: ${({ theme }) => theme.mainBackground};
@@ -27,20 +24,9 @@ const InnerWrapper = styled.div`
     }
 `;
 
-const LeftSection = styled.div`
-    flex: 8;
-`;
-
-const RightSection = styled.div`
-    flex: 4;
-
-    > div {
-        margin-bottom: 30px;
-    }
-`;
-
 const Feed = ({ className }) => {
     const { theme, setTheme } = useTheme();
+    const { data: session, status } = useSession();
 
     const toggle = () => {
         setTheme(theme === themes.dark ? themes.light : themes.dark);
@@ -48,15 +34,13 @@ const Feed = ({ className }) => {
 
     return (
         <FeedWrapper theme={theme} className={className}>
-            <Header />
+            <Header isLogged={session} />
             <InnerWrapper>
-                <LeftSection>
-                    <CreatePost />
-                </LeftSection>
-                <RightSection>
-                    <FriendList />
-                    <GroupList />
-                </RightSection>
+                {session ? (
+                    <LoggedFeed authenticating={status === "loading"} />
+                ) : (
+                    <PublicFeed authenticating={status === "loading"} />
+                )}
             </InnerWrapper>
         </FeedWrapper>
     );

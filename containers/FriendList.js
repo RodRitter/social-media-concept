@@ -23,16 +23,16 @@ const FriendList = () => {
             <LargeBadgeProfile
                 size="lg"
                 img="/img/profile-1.jpg"
-                name="John Doe"
-                meta="@johndoe"
+                topText="John Doe"
+                bottomText="@johndoe"
                 onClick={() => {}}
             />
 
             <LargeBadgeProfile
                 size="lg"
                 img="/img/profile-1.jpg"
-                name="Riaan van der Westhuizen"
-                meta="@riaanvdwest"
+                topText="Riaan van der Westhuizen"
+                bottomText="@riaanvdwest"
                 onClick={() => {}}
             />
         </Panel>

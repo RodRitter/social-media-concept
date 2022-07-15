@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useTheme } from "../lib/ThemeProvider";
 import BadgeProfile from "../components/BadgeProfile";
 import TextArea from "../components/TextArea";
 import Panel from "../components/Panel";
-import Button from "../components/Button";
 
-const CreatePostWrapper = styled.div``;
+const CreatePostWrapper = styled.div`
+    margin-bottom: 40px;
+`;
 
 const CreatePostInputWrapper = styled(Panel)`
     display: flex;
+    position: relative;
 `;
 
 const TextAreaStyled = styled(TextArea)`
@@ -22,8 +24,19 @@ const TextAreaStyled = styled(TextArea)`
     }
 `;
 
+const HintText = styled.div`
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+`;
+
 const CreatePost = () => {
     const { theme } = useTheme();
+    const [showHint, setShowHint] = useState(false);
+
+    const onValueChange = (value) => {
+        setShowHint(value.length > 0);
+    };
 
     return (
         <CreatePostWrapper>
@@ -33,7 +46,13 @@ const CreatePost = () => {
                 <TextAreaStyled
                     placeholder="What can you share today?"
                     rows={1}
+                    onChange={onValueChange}
                 />
+                {showHint && (
+                    <HintText>
+                        Hit <b>enter</b> to post
+                    </HintText>
+                )}
             </CreatePostInputWrapper>
         </CreatePostWrapper>
     );
