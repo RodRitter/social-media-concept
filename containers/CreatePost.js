@@ -9,31 +9,34 @@ import Button from "../components/Button";
 const CreatePostWrapper = styled.div``;
 
 const CreatePostInputWrapper = styled(Panel)`
-  display: flex;
+    display: flex;
 `;
 
 const TextAreaStyled = styled(TextArea)`
-  flex: 1;
-  font-size: 1.1rem;
-  padding-top: 20px;
+    flex: 1;
+    font-size: 1.1rem;
+    margin-top: 25px;
 
-  &:focus {
-    outline: none;
-  }
+    &:focus {
+        outline: none;
+    }
 `;
 
 const CreatePost = () => {
-  const { theme } = useTheme();
+    const { theme } = useTheme();
 
-  return (
-    <CreatePostWrapper>
-      <h1>Create a post</h1>
-      <CreatePostInputWrapper theme={theme}>
-        <BadgeProfile img="/img/profile-1.jpg" />
-        <TextAreaStyled placeholder="What can you share today?" rows={1} />
-      </CreatePostInputWrapper>
-    </CreatePostWrapper>
-  );
+    return (
+        <CreatePostWrapper>
+            <h1>Create a post</h1>
+            <CreatePostInputWrapper theme={theme}>
+                <BadgeProfile img="/img/profile-1.jpg" />
+                <TextAreaStyled
+                    placeholder="What can you share today?"
+                    rows={1}
+                />
+            </CreatePostInputWrapper>
+        </CreatePostWrapper>
+    );
 };
 
 export default CreatePost;
