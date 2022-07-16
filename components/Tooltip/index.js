@@ -29,9 +29,9 @@ const TooltipWrapper = styled.div`
 
 const CloseButton = styled(Button)`
     position: absolute;
-    top: 5px;
-    right: 5px;
-    padding: 0;
+    top: -10px;
+    right: -10px;
+    padding: 20px;
     height: auto;
     color: ${({ theme }) => theme.tooltipBorder};
 
@@ -40,7 +40,15 @@ const CloseButton = styled(Button)`
     }
 `;
 
-const Tooltip = ({ top, bottom, left, right, className, children }) => {
+const Tooltip = ({
+    top,
+    bottom,
+    left,
+    right,
+    onClose,
+    className,
+    children,
+}) => {
     const { theme } = useTheme();
 
     return (
@@ -51,6 +59,7 @@ const Tooltip = ({ top, bottom, left, right, className, children }) => {
             bottom={bottom}
             left={left}
             right={right}
+            onClick={onClose}
         >
             <CloseButton variant="link" theme={theme}>
                 <X />

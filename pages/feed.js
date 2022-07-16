@@ -35,7 +35,7 @@ const Feed = ({ className }) => {
 
     return (
         <FeedWrapper theme={theme} className={className}>
-            <Header session={session} />
+            <Header session={session} authenticating={status === "loading"} />
             <InnerWrapper>
                 {session ? (
                     <LoggedFeed authenticating={status === "loading"} />

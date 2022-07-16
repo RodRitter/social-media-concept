@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Link from "next/link";
 import { Users } from "react-feather";
@@ -76,7 +76,7 @@ const TooltipStyled = styled(Tooltip)`
     left: 50%;
     transform: translateX(-50%);
     width: 300px;
-    animation: ${tooltipBounce} 1s ease-in-out infinite;
+    animation: ${tooltipBounce} 1.5s ease-in-out infinite;
 
     > p {
         font-size: 1rem;
@@ -92,8 +92,9 @@ const TooltipStyled = styled(Tooltip)`
     }
 `;
 
-const Header = ({ session }) => {
+const Header = ({ session, authenticating }) => {
     const { theme } = useTheme();
+    const [tooltipOpen, setTooltipOpen] = useState(true);
 
     return (
         <HeaderWrapper>
@@ -106,44 +107,57 @@ const Header = ({ session }) => {
                     <BrandByline>An experiment by Rod Ritter</BrandByline>
                 </Brand>
 
-                <ProfilePanel>
-                    {session && (
-                        <SignOutButton
-                            variant="secondary"
-                            onClick={() => signOut({ redirect: false })}
-                        >
-                            Sign Out
-                        </SignOutButton>
-                    )}
+                {!authenticating && (
+                    <ProfilePanel>
+                        {session && (
+                            <SignOutButton
+                                variant="secondary"
+                                onClick={() => signOut({ redirect: false })}
+                            >
+                                Sign Out
+                            </SignOutButton>
+                        )}
 
-                    {session ? (
-                        <BadgeProfile
-                            img={session.user.image}
-                            topText={session.user.name}
-                            bottomText="@rodritter"
-                            onClick={() => {}}
-                        />
-                    ) : (
-                        <SignInWrapper>
-                            <SignInButton onClick={() => signIn("google")}>
-                                Sign in with Google
-                            </SignInButton>
+                        {session ? (
+                            <BadgeProfile
+                                img={session.user.image}
+                                topText={session.user.name}
+                                bottomText="@rodritter"
+                                onClick={() => {}}
+                            />
+                        ) : (
+                            <SignInWrapper>
+                                <SignInButton onClick={() => signIn("google")}>
+                                    Sign in with Google
+                                </SignInButton>
 
-                            <TooltipStyled top={70} theme={theme}>
-                                <h3>This is a demo ☝️</h3>
-                                <p>
-                                    All new accounts are deleted daily. Feel
-                                    free to sign up.
-                                </p>
-                                <p>or</p>
-                                <p>
-                                    Sign in with the{" "}
-                                    <Link href="/">demo account</Link>.
-                                </p>
-                            </TooltipStyled>
-                        </SignInWrapper>
-                    )}
-                </ProfilePanel>
+                                {tooltipOpen && (
+                                    <TooltipStyled
+                                        top={70}
+                                        theme={theme}
+                                        onClose={() => setTooltipOpen(false)}
+                                    >
+                                        <h3>Create an account ☝️</h3>
+                                        <p>
+                                            All new accounts are{" "}
+                                            <b>deleted daily</b>. Feel free to
+                                            play, break and test the demo.
+                                        </p>
+                                        <p>
+                                            I only have Google login for the
+                                            purpose of this demo.
+                                        </p>
+                                        <p>or</p>
+                                        <p>
+                                            Sign in with the{" "}
+                                            <Link href="/">demo account</Link>.
+                                        </p>
+                                    </TooltipStyled>
+                                )}
+                            </SignInWrapper>
+                        )}
+                    </ProfilePanel>
+                )}
             </HeaderInner>
         </HeaderWrapper>
     );
