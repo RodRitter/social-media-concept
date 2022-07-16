@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ThumbsUp } from "react-feather";
+import { ThumbsUp, Plus } from "react-feather";
 import { useTheme } from "../lib/ThemeProvider";
 import BadgeProfile from "../components/BadgeProfile";
 import Button from "../components/Button";
@@ -15,15 +15,19 @@ const PostWrapper = styled.div`
 const PostInfoWrapper = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
 `;
 
 const BadgeProfileStyled = styled(BadgeProfile)``;
 
-const FollowButton = styled(Button)``;
+const FollowButton = styled(Button)`
+    margin-left: 20px;
+`;
 
 const PostPanel = styled.div`
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     padding: 10px;
+    color: ${({ theme }) => theme.mediumText};
 `;
 
 const ActionsSection = styled.div`
@@ -35,18 +39,6 @@ const ActionsSection = styled.div`
     > * {
         margin-left: 20px;
     }
-`;
-
-const ActionsInfo = styled.div`
-    color: gray;
-    display: flex;
-    align-items: center;
-    font-size: 1.1rem;
-`;
-
-const LikeIcon = styled(ThumbsUp)`
-    width: 18px;
-    margin-right: 5px;
 `;
 
 const Post = () => {
@@ -61,9 +53,11 @@ const Post = () => {
                     bottomText="Posted Today at 10.35"
                     onClick={() => {}}
                 />
-                <FollowButton variant="secondary">Add Friend</FollowButton>
+                <FollowButton variant="link" icon={<Plus />}>
+                    Add Friend
+                </FollowButton>
             </PostInfoWrapper>
-            <PostPanel>
+            <PostPanel theme={theme}>
                 This is a test post. This is a test post. This is a test post.
                 This is a test post. This is a test post. This is a test post.
                 This is a test post. This is a test post. This is a test post.

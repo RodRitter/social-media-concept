@@ -21,12 +21,21 @@ export default NextAuth({
         // ...add more providers here
     ],
     callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            return true;
+        },
         async redirect({ url, baseUrl }) {
             // Allows relative callback URLs
             if (url.startsWith("/")) return `${baseUrl}${url}`;
             // Allows callback URLs on the same origin
             else if (new URL(url).origin === baseUrl) return url;
             return baseUrl;
+        },
+        async session({ session, token, user }) {
+            return session;
+        },
+        async jwt({ token, user, account, profile, isNewUser }) {
+            return token;
         },
     },
 });

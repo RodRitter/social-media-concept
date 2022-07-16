@@ -9,6 +9,12 @@ const LeftSection = styled.div`
 
 const RightSection = styled.div`
     flex: 4;
+`;
+
+const RightInner = styled.div`
+    position: -webkit-sticky;
+    position: sticky;
+    top: 40px;
 
     > div {
         margin-bottom: 30px;
@@ -19,10 +25,12 @@ const PublicFeed = () => {
     return (
         <>
             <LeftSection>
-                <PostList />
+                <PostList heading="Posts by everyone" />
             </LeftSection>
             <RightSection>
-                <RecentSignUps />
+                <RightInner>
+                    <RecentSignUps />
+                </RightInner>
             </RightSection>
         </>
     );

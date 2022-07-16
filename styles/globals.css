@@ -3,10 +3,10 @@
 html,
 body,
 #__next {
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  font-family: "DM Sans", sans-serif;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: "DM Sans", sans-serif;
 }
 
 h1,
@@ -15,21 +15,21 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0 0 10px 0;
+    margin: 0 0 10px 0;
 }
 
 h1 {
-  font-size: 1.4rem;
+    font-size: 1.4rem;
 }
 
 h2 {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
 }
 
 h3 {
-  font-size: 1.1rem;
+    font-size: 1.1rem;
 }
 
 p {
-  margin: 0 0 10px 0;
+    margin: 0 0 10px 0;
 }

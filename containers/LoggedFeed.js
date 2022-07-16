@@ -11,6 +11,12 @@ const LeftSection = styled.div`
 
 const RightSection = styled.div`
     flex: 4;
+`;
+
+const RightInner = styled.div`
+    position: -webkit-sticky;
+    position: sticky;
+    top: 40px;
 
     > div {
         margin-bottom: 30px;
@@ -22,11 +28,13 @@ const LoggedFeed = () => {
         <>
             <LeftSection>
                 <CreatePost />
-                <PostList />
+                <PostList heading="Posts for you" />
             </LeftSection>
             <RightSection>
-                <FriendList />
-                <GroupList />
+                <RightInner>
+                    <FriendList />
+                    <GroupList />
+                </RightInner>
             </RightSection>
         </>
     );

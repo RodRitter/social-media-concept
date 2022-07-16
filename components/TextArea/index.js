@@ -11,8 +11,7 @@ const TextAreaStyled = styled.textarea`
     line-height: 1.5rem;
 `;
 
-const TextArea = ({ placeholder, onChange, className }) => {
-    const [value, setValue] = useState("");
+const TextArea = ({ placeholder, onChange, onKeyDown, value, className }) => {
     const { theme } = useTheme();
     const textAreaRef = useRef();
 
@@ -28,15 +27,21 @@ const TextArea = ({ placeholder, onChange, className }) => {
     useEffect(resizeToFit, []);
 
     const onTextChange = (event) => {
-        setValue(event.target.value);
-        onChange(event.target.value);
+        onChange(event.target.value, event.key);
         resizeToFit();
+    };
+
+    const onKeyDownHandler = (event) => {
+        if (onKeyDown) {
+            onKeyDown(event);
+        }
     };
 
     return (
         <TextAreaStyled
             ref={textAreaRef}
             onChange={onTextChange}
+            onKeyDown={onKeyDownHandler}
             theme={theme}
             placeholder={placeholder}
             className={className}

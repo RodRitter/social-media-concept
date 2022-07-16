@@ -30,6 +30,8 @@ const ButtonStyled = styled.button`
         switch (variant) {
             case "secondary":
                 return theme.buttonSecondary;
+            case "link":
+                return theme.buttonLink;
             default:
                 return theme.buttonPrimary;
         }
@@ -38,6 +40,8 @@ const ButtonStyled = styled.button`
         switch (variant) {
             case "secondary":
                 return theme.buttonSecondaryText;
+            case "link":
+                return theme.buttonLinkText;
             default:
                 return theme.buttonPrimaryText;
         }
@@ -48,6 +52,8 @@ const ButtonStyled = styled.button`
             switch (variant) {
                 case "secondary":
                     return theme.buttonSecondaryHoverBackground;
+                case "link":
+                    return theme.buttonLinkHoverBackground;
                 default:
                     return theme.buttonPrimaryHoverBackground;
             }
@@ -57,6 +63,8 @@ const ButtonStyled = styled.button`
             switch (variant) {
                 case "secondary":
                     return theme.buttonSecondaryHoverText;
+                case "link":
+                    return theme.buttonLinkHoverText;
                 default:
                     return theme.buttonPrimaryHoverText;
             }

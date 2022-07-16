@@ -12,6 +12,7 @@ const FeedWrapper = styled.div`
     background: ${({ theme }) => theme.mainBackground};
     color: ${({ theme }) => theme.text};
     height: 100%;
+    overflow: auto;
 `;
 
 const InnerWrapper = styled.div`
@@ -34,7 +35,7 @@ const Feed = ({ className }) => {
 
     return (
         <FeedWrapper theme={theme} className={className}>
-            <Header isLogged={session} />
+            <Header session={session} />
             <InnerWrapper>
                 {session ? (
                     <LoggedFeed authenticating={status === "loading"} />
