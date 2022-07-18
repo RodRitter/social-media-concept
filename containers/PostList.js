@@ -28,8 +28,14 @@ const PostsWrapper = styled.div`
 `;
 
 const PostList = ({ heading }) => {
-    const { fetchingPosts, setFeedType, feedType, fetchPosts, posts } =
-        usePosts();
+    const {
+        fetchingPosts,
+        setFeedType,
+        feedType,
+        fetchPosts,
+        posts,
+        likePost,
+    } = usePosts();
 
     useEffect(() => {
         fetchPosts(true);
@@ -77,7 +83,8 @@ const PostList = ({ heading }) => {
                                 postAuthorId={post.userId}
                                 author={post.author[0]}
                                 date={post.date}
-                                likes={0}
+                                likes={post.likes}
+                                likePost={() => likePost(post._id)}
                             >
                                 {post.post}
                             </Post>

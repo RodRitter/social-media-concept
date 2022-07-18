@@ -59,7 +59,7 @@ const ActionsSection = styled.div`
     }
 `;
 
-const Post = ({ likes, canAdd, author, date, postAuthorId, children }) => {
+const Post = ({ likes, canAdd, author, date, likePost, children }) => {
     const { theme, setTheme } = useTheme();
     const { data: session, status } = useSession();
 
@@ -75,6 +75,11 @@ const Post = ({ likes, canAdd, author, date, postAuthorId, children }) => {
         if (mins / 24 < 24) return `about ${Math.ceil(mins / 24)} hours ago`;
 
         return `about ${Math.floor(mins / 60 / 24)} days ago`;
+    };
+
+    const likeButtonVariant = () => {
+        const match = likes.find((like) => like === session.user._id);
+        return match ? "primary" : "link";
     };
 
     return (
@@ -95,15 +100,17 @@ const Post = ({ likes, canAdd, author, date, postAuthorId, children }) => {
                 )}
             </PostInfoWrapper>
             <PostPanel theme={theme}>{children}</PostPanel>
-            {session &&
-                likes !== undefined &&
-                session.user._id !== postAuthorId && (
-                    <ActionsSection>
-                        <Button variant="link" icon={<ThumbsUp />}>
-                            <span>{likes}</span>
-                        </Button>
-                    </ActionsSection>
-                )}
+            {session && likes !== undefined && (
+                <ActionsSection>
+                    <Button
+                        variant={likeButtonVariant()}
+                        icon={<ThumbsUp />}
+                        onClick={likePost}
+                    >
+                        <span>{likes.length}</span>
+                    </Button>
+                </ActionsSection>
+            )}
         </PostWrapper>
     );
 };

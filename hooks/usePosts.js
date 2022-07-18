@@ -43,11 +43,25 @@ export const usePosts = () => {
         refreshInterval: 5000,
     });
 
+    const likePost = (postId) => {
+        fetch(`/api/like`, {
+            method: "POST",
+            mode: "cors",
+            body: JSON.stringify({ postId }),
+        })
+            .then((result) => result.json())
+            .then((res) => {
+                fetchPosts();
+            })
+            .finally(() => {});
+    };
+
     return {
         fetchingPosts,
         setFeedType,
         feedType,
         fetchPosts,
         posts: store[STORE_KEY],
+        likePost,
     };
 };

@@ -97,7 +97,10 @@ export default async (req, res) => {
                     post: insertedPost,
                 });
             default:
-                break;
+                return res.status(400).json({
+                    error: "INVALID_METHOD",
+                    session,
+                });
         }
     } else {
         res.status(400).json({
