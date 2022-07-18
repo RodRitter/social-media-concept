@@ -1,3 +1,6 @@
+export const POST_RATE_LIMIT = 30; // Minimum wait time between posts
+export const POST_MAX_CHARS = 200;
+
 export const themes = {
     dark: {
         mainBackground: "#111111",
@@ -22,6 +25,9 @@ export const themes = {
         postBorder: "#1D1D22",
         tooltipBackground: "#1D1D22",
         tooltipBorder: "#4c4c4c",
+        snackbarText: "#ffffff",
+        snackbarError: "#C92F45",
+        snackbarSuccess: "#3bab5b",
     },
     light: {
         mainBackground: "red",

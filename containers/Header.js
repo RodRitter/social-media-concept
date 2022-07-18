@@ -92,6 +92,15 @@ const TooltipStyled = styled(Tooltip)`
     }
 `;
 
+const GuestSignInButton = styled(Button)`
+    margin: 0 auto;
+`;
+
+const BrandLogo = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
 const Header = ({ session, authenticating }) => {
     const { theme } = useTheme();
     const [tooltipOpen, setTooltipOpen] = useState(true);
@@ -100,10 +109,10 @@ const Header = ({ session, authenticating }) => {
         <HeaderWrapper>
             <HeaderInner>
                 <Brand>
-                    <div>
+                    <BrandLogo>
                         <Users />
                         <span>crowdly</span>
-                    </div>
+                    </BrandLogo>
                     <BrandByline>An experiment by Rod Ritter</BrandByline>
                 </Brand>
 
@@ -112,7 +121,7 @@ const Header = ({ session, authenticating }) => {
                         {session && (
                             <SignOutButton
                                 variant="secondary"
-                                onClick={() => signOut({ redirect: false })}
+                                onClick={() => signOut()}
                             >
                                 Sign Out
                             </SignOutButton>
@@ -122,7 +131,11 @@ const Header = ({ session, authenticating }) => {
                             <BadgeProfile
                                 img={session.user.image}
                                 topText={session.user.name}
-                                bottomText="@rodritter"
+                                bottomText={
+                                    session.user.alias
+                                        ? `@${session.user.alias}`
+                                        : null
+                                }
                                 onClick={() => {}}
                             />
                         ) : (
@@ -148,10 +161,19 @@ const Header = ({ session, authenticating }) => {
                                             purpose of this demo.
                                         </p>
                                         <p>or</p>
-                                        <p>
-                                            Sign in with the{" "}
-                                            <Link href="/">demo account</Link>.
-                                        </p>
+
+                                        <GuestSignInButton
+                                            variant="secondary"
+                                            onClick={() => {
+                                                signIn("credentials", {
+                                                    username: "guest",
+                                                });
+                                            }}
+                                        >
+                                            {authenticating
+                                                ? "Logging in"
+                                                : "Demo Account Sign In"}
+                                        </GuestSignInButton>
                                     </TooltipStyled>
                                 )}
                             </SignInWrapper>

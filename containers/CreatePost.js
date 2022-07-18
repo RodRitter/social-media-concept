@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Loader } from "react-feather";
+import { useSession } from "next-auth/react";
 import { useTheme } from "../lib/ThemeProvider";
+import { POST_MAX_CHARS } from "../globals";
 import BadgeProfile from "../components/BadgeProfile";
 import TextArea from "../components/TextArea";
 import Panel from "../components/Panel";
@@ -58,50 +60,58 @@ const PostingLoader = styled(Loader)`
     margin-right: 10px;
 `;
 
-const CHAR_LIMIT = 200;
-
 const CreatePost = () => {
     const { theme } = useTheme();
+    const { data: session, status } = useSession();
+
     const [value, setValue] = useState("");
     const [showHint, setShowHint] = useState(false);
     const [chars, setChars] = useState(value.length);
     const [posting, setPosting] = useState(false);
 
     const onKeyDown = (event) => {
-        if (posting) {
+        if (
+            event.key === "Enter" &&
+            (value.length === 0 || value.length > POST_MAX_CHARS)
+        ) {
             event.preventDefault();
             return;
         }
 
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && !posting) {
             event.preventDefault();
             // Post
             setPosting(true);
+            fetch(`/api/post`, {
+                method: "POST",
+                mode: "cors",
+                body: JSON.stringify({ post: value }),
+            })
+                .then((result) => result.json())
+                .then((res) => {
+                    console.log("success", res);
+                    onValueChange("");
+                })
+                .catch((err) => console.log("error", err))
+                .finally(() => {
+                    setPosting(false);
+                });
         }
     };
 
     const onValueChange = (value) => {
-        if (value.length <= CHAR_LIMIT) {
+        if (value.length <= POST_MAX_CHARS) {
             setValue(value);
             setChars(value.length);
         }
         setShowHint(value.length > 0);
     };
 
-    useEffect(() => {
-        if (posting) {
-            setTimeout(() => {
-                setPosting(false);
-                onValueChange("");
-            }, 2000);
-        }
-    }, [posting]);
-
     return (
         <CreatePostWrapper>
             <h1>Create a post</h1>
             <CreatePostInputWrapper theme={theme}>
-                <BadgeProfile img="/img/profile-1.jpg" />
+                <BadgeProfile img={session.user.image} />
                 <TextAreaStyled
                     placeholder="What can you share today?"
                     rows={1}
@@ -123,7 +133,7 @@ const CreatePost = () => {
                             </HintText>
                         )}
                         <CharLimitText>
-                            {chars} / {CHAR_LIMIT}
+                            {chars} / {POST_MAX_CHARS}
                         </CharLimitText>
                     </>
                 )}

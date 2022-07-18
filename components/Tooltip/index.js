@@ -59,9 +59,8 @@ const Tooltip = ({
             bottom={bottom}
             left={left}
             right={right}
-            onClick={onClose}
         >
-            <CloseButton variant="link" theme={theme}>
+            <CloseButton variant="link" theme={theme} onClick={onClose}>
                 <X />
             </CloseButton>
             {children}

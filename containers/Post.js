@@ -15,7 +15,7 @@ const PostWrapper = styled.div`
 const PostInfoWrapper = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 `;
 
 const BadgeProfileStyled = styled(BadgeProfile)``;
@@ -41,7 +41,7 @@ const ActionsSection = styled.div`
     }
 `;
 
-const Post = () => {
+const Post = ({ likes, canAdd, children }) => {
     const { theme, setTheme } = useTheme();
 
     return (
@@ -53,21 +53,20 @@ const Post = () => {
                     bottomText="Posted Today at 10.35"
                     onClick={() => {}}
                 />
-                <FollowButton variant="link" icon={<Plus />}>
-                    Add Friend
-                </FollowButton>
+                {canAdd && (
+                    <FollowButton variant="link" icon={<Plus />}>
+                        Add Friend
+                    </FollowButton>
+                )}
             </PostInfoWrapper>
-            <PostPanel theme={theme}>
-                This is a test post. This is a test post. This is a test post.
-                This is a test post. This is a test post. This is a test post.
-                This is a test post. This is a test post. This is a test post.
-                This is a test post.
-            </PostPanel>
-            <ActionsSection>
-                <Button variant="secondary" icon={<ThumbsUp />}>
-                    5
-                </Button>
-            </ActionsSection>
+            <PostPanel theme={theme}>{children}</PostPanel>
+            {likes && (
+                <ActionsSection>
+                    <Button variant="secondary" icon={<ThumbsUp />}>
+                        {likes > 0 ? likes : null}
+                    </Button>
+                </ActionsSection>
+            )}
         </PostWrapper>
     );
 };
