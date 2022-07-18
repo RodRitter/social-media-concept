@@ -1,4 +1,5 @@
 import { getSession } from "next-auth/react";
+import { ObjectId } from "bson";
 import { connectToDatabase } from "../../lib/mongodb";
 import { POST_MAX_CHARS, POST_RATE_LIMIT } from "../../globals";
 
@@ -9,36 +10,62 @@ export default async (req, res) => {
     if (session) {
         const {
             method,
-            query: { post },
+            query: { post, feed },
         } = req;
 
         const { db } = await connectToDatabase();
+        const { _id } = session.user;
 
         switch (method) {
             case "GET":
-                if (session) {
-                    // Get posts for user
-                } else {
-                    // Get public posts
+                let findQuery;
+                switch (feed) {
+                    case "public":
+                        findQuery = {};
+                        break;
+                    case "friends":
+                    // Mongodb: find( { _id : { $in : [1,2,3,4] } } );
+                    // Search for friends
+                    default:
+                        findQuery = { userId: ObjectId(_id) };
                 }
-                break;
-            case "POST":
-                const { _id } = session.user;
 
+                const posts = await db
+                    .collection("posts")
+                    .aggregate([
+                        { $match: findQuery },
+                        {
+                            $lookup: {
+                                from: "users",
+                                localField: "userId",
+                                foreignField: "_id",
+                                as: "author",
+                            },
+                        },
+                    ])
+                    .limit(10)
+                    .sort({ date: -1 })
+                    .toArray();
+
+                return res.status(200).json({
+                    posts,
+                    info: req.query,
+                });
+            case "POST":
                 // Post rate limiter (anti-spam)
                 const latestPost = await db
                     .collection("posts")
-                    .find({ userId: _id })
+                    .find({ userId: ObjectId(_id) })
                     .sort({ date: -1 })
                     .limit(1)
                     .toArray();
 
                 if (latestPost.length > 0) {
                     const _post = latestPost[0];
-
                     const dateDiff = new Date() - _post.date;
-
                     const secondsSinceLast = dateDiff / 1000;
+
+                    console.log(secondsSinceLast, POST_RATE_LIMIT);
 
                     if (secondsSinceLast < POST_RATE_LIMIT) {
                         return res.status(400).json({
@@ -60,16 +87,15 @@ export default async (req, res) => {
                 }
 
                 const insertedPost = db.collection("posts").insertOne({
-                    userId: _id,
+                    userId: ObjectId(_id),
                     post,
+                    likes: [],
                     date: new Date(),
                 });
 
-                res.status(200).json({
+                return res.status(200).json({
                     post: insertedPost,
-                    session,
                 });
-                break;
             default:
                 break;
         }

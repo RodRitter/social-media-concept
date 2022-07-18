@@ -22,7 +22,8 @@
     "react-dom": "18.2.0",
     "react-feather": "^2.0.10",
     "storybook": "^6.5.9",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "swr": "^1.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",

@@ -28,7 +28,7 @@ const LoggedFeed = () => {
         <>
             <LeftSection>
                 <CreatePost />
-                <PostList heading="Posts for you" />
+                <PostList />
             </LeftSection>
             <RightSection>
                 <RightInner>

@@ -8320,12 +8320,7 @@ jest@^28.1.2:
     import-local "^3.0.2"
     jest-cli "^28.1.2"
 
-jose@^4.1.4, jose@^4.3.7:
-  version "4.8.3"
-  resolved "https://registry.npmjs.org/jose/-/jose-4.8.3.tgz"
-  integrity sha512-7rySkpW78d8LBp4YU70Wb7+OTgE3OwAALNVZxhoIhp4Kscp+p/fBkdpxGAMKxvCAMV4QfXBU9m6l9nX/vGwd2g==
-
-jose@^4.8.3:
+jose@^4.1.4, jose@^4.3.7, jose@^4.8.3:
   version "4.8.3"
   resolved "https://registry.yarnpkg.com/jose/-/jose-4.8.3.tgz#5a754fb4aa5f2806608d083f438e6916b11087da"
   integrity sha512-7rySkpW78d8LBp4YU70Wb7+OTgE3OwAALNVZxhoIhp4Kscp+p/fBkdpxGAMKxvCAMV4QfXBU9m6l9nX/vGwd2g==
@@ -11809,6 +11804,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+swr@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-1.3.0.tgz#c6531866a35b4db37b38b72c45a63171faf9f4e8"
+  integrity sha512-dkghQrOl2ORX9HYrMDtPa7LTVHJjCTeZoB1dqTbnnEDlSvN8JEKpYIYurDfvbQFUUS8Cg8PceFVZNkW0KNNYPw==
 
 symbol.prototype.description@^1.0.0:
   version "1.0.5"

@@ -19,7 +19,8 @@ const SnackbarWrapper = styled.div`
     position: relative;
     width: fit-content;
     font-size: 1rem;
-    top: -70px;
+    transition: all ease-in-out 0.3s;
+    top: ${({ open }) => (open ? "40px" : "-70px")};
 `;
 
 const CloseButton = styled(Button)`
@@ -36,19 +37,27 @@ const CloseButton = styled(Button)`
     }
 `;
 
-const Snackbar = ({ variant, children, className }) => {
+const Snackbar = ({ variant, children, className, open, setOpen }) => {
     const { theme } = useTheme();
-    const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        if(open) {
-            setTimeout(() => setOpen(false), 3000);
+        if (open) {
+            setTimeout(() => setOpen(false), 2000);
         }
-    }, [open])
+    }, [open, setOpen]);
 
     return (
-        <SnackbarWrapper variant={variant} theme={theme} className={className}>
-            <CloseButton theme={theme} variant="link">
+        <SnackbarWrapper
+            open={open}
+            variant={variant}
+            theme={theme}
+            className={className}
+        >
+            <CloseButton
+                theme={theme}
+                variant="link"
+                onClick={() => setOpen(false)}
+            >
                 <X />
             </CloseButton>
             {children}

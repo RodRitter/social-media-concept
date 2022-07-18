@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react";
 import Header from "../containers/Header";
 import LoggedFeed from "../containers/LoggedFeed";
 import PublicFeed from "../containers/PublicFeed";
-import Snackbar from "../components/Snackbar";
 
 const FeedWrapper = styled.div`
     background: ${({ theme }) => theme.mainBackground};
@@ -26,13 +25,6 @@ const InnerWrapper = styled.div`
     }
 `;
 
-const StyledSnackbar = styled(Snackbar)`
-    position: fixed;
-    left: 50%;
-    translate: transformX(-50%);
-    z-index: 20;
-`;
-
 const Feed = ({ className }) => {
     const { theme, setTheme } = useTheme();
     const { data: session, status } = useSession();
@@ -43,8 +35,6 @@ const Feed = ({ className }) => {
 
     return (
         <FeedWrapper theme={theme} className={className}>
-            <StyledSnackbar variant="error">This is a snackbar</StyledSnackbar>
-
             <Header session={session} authenticating={status === "loading"} />
             <InnerWrapper>
                 {session ? (

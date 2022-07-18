@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Loader } from "react-feather";
 import { useSession } from "next-auth/react";
 import { useTheme } from "../lib/ThemeProvider";
+import { useSnackbar } from "../lib/SnackbarProvider";
+import { usePosts } from "../hooks/usePosts";
 import { POST_MAX_CHARS } from "../globals";
 import BadgeProfile from "../components/BadgeProfile";
 import TextArea from "../components/TextArea";
@@ -62,7 +64,11 @@ const PostingLoader = styled(Loader)`
 
 const CreatePost = () => {
     const { theme } = useTheme();
+    const { setSnackbarOpen, setSnackbarContent, setSnackbarVariant } =
+        useSnackbar();
+
     const { data: session, status } = useSession();
+    const { fetchPosts } = usePosts();
 
     const [value, setValue] = useState("");
     const [showHint, setShowHint] = useState(false);
@@ -89,12 +95,22 @@ const CreatePost = () => {
             })
                 .then((result) => result.json())
                 .then((res) => {
-                    console.log("success", res);
-                    onValueChange("");
+                    setSnackbarOpen(false);
+                    if (res.error) {
+                        setSnackbarContent(res.error);
+                        setSnackbarVariant("error");
+                    } else {
+                        setSnackbarVariant("success");
+                        setSnackbarContent("Posted successfully!");
+                        // Remove text in input
+                        onValueChange("");
+                    }
+
+                    setSnackbarOpen(true);
                 })
-                .catch((err) => console.log("error", err))
                 .finally(() => {
                     setPosting(false);
+                    fetchPosts();
                 });
         }
     };
