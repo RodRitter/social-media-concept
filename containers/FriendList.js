@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Panel from "../components/Panel";
 import BadgeProfile from "../components/BadgeProfile";
+import { useFollows } from "../hooks/useFollows";
 
 const LargeBadgeProfile = styled(BadgeProfile)`
     margin-bottom: 10px;
@@ -15,26 +16,34 @@ const CardHeading = styled.h2`
     margin: 5px 10px 20px 10px;
 `;
 
+const EmptyMessage = styled.div`
+    font-size: 1.2rem;
+    color: gray;
+    padding: 20px 0;
+    text-align: center;
+`;
+
 const FriendList = () => {
+    const { followData } = useFollows();
+
     return (
         <Panel>
-            <CardHeading>Friends</CardHeading>
+            <CardHeading>Following</CardHeading>
+            {followData &&
+                followData.map((user) => (
+                    <LargeBadgeProfile
+                        key={user._id}
+                        size="lg"
+                        img={user.image}
+                        topText={user.name}
+                        onClick={() => {}}
+                    />
+                ))}
 
-            <LargeBadgeProfile
-                size="lg"
-                img="/img/profile-1.jpg"
-                topText="John Doe"
-                bottomText="@johndoe"
-                onClick={() => {}}
-            />
-
-            <LargeBadgeProfile
-                size="lg"
-                img="/img/profile-1.jpg"
-                topText="Riaan van der Westhuizen"
-                bottomText="@riaanvdwest"
-                onClick={() => {}}
-            />
+            {!followData ||
+                (followData.length === 0 && (
+                    <EmptyMessage>{`You're not following anyone`}</EmptyMessage>
+                ))}
         </Panel>
     );
 };

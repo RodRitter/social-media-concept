@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { useTheme } from "../lib/ThemeProvider";
 import { themes } from "../globals";
 import { useSession } from "next-auth/react";
+import { usePosts } from "../hooks/usePosts";
 
 import Header from "../containers/Header";
 import LoggedFeed from "../containers/LoggedFeed";
-import PublicFeed from "../containers/PublicFeed";
 
 const FeedWrapper = styled.div`
     background: ${({ theme }) => theme.mainBackground};
@@ -28,6 +28,7 @@ const InnerWrapper = styled.div`
 const Feed = ({ className }) => {
     const { theme, setTheme } = useTheme();
     const { data: session, status } = useSession();
+    usePosts();
 
     const toggle = () => {
         setTheme(theme === themes.dark ? themes.light : themes.dark);
@@ -37,10 +38,8 @@ const Feed = ({ className }) => {
         <FeedWrapper theme={theme} className={className}>
             <Header session={session} authenticating={status === "loading"} />
             <InnerWrapper>
-                {session ? (
+                {session && (
                     <LoggedFeed authenticating={status === "loading"} />
-                ) : (
-                    <PublicFeed authenticating={status === "loading"} />
                 )}
             </InnerWrapper>
         </FeedWrapper>

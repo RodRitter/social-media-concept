@@ -121,7 +121,7 @@ const Header = ({ session, authenticating }) => {
                         {session && (
                             <SignOutButton
                                 variant="secondary"
-                                onClick={() => signOut()}
+                                onClick={() => signOut({ callbackUrl: "/" })}
                             >
                                 Sign Out
                             </SignOutButton>
@@ -140,7 +140,13 @@ const Header = ({ session, authenticating }) => {
                             />
                         ) : (
                             <SignInWrapper>
-                                <SignInButton onClick={() => signIn("google")}>
+                                <SignInButton
+                                    onClick={() =>
+                                        signIn("google", {
+                                            callbackUrl: "/feed",
+                                        })
+                                    }
+                                >
                                     Sign in with Google
                                 </SignInButton>
 
@@ -167,6 +173,7 @@ const Header = ({ session, authenticating }) => {
                                             onClick={() => {
                                                 signIn("credentials", {
                                                     username: "guest",
+                                                    callbackUrl: "/feed",
                                                 });
                                             }}
                                         >

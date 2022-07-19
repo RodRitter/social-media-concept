@@ -42,7 +42,7 @@ const Snackbar = ({ variant, children, className, open, setOpen }) => {
 
     useEffect(() => {
         if (open) {
-            setTimeout(() => setOpen(false), 2000);
+            setTimeout(() => setOpen(false), 4000);
         }
     }, [open, setOpen]);
 

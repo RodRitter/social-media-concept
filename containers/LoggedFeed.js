@@ -33,7 +33,6 @@ const LoggedFeed = () => {
             <RightSection>
                 <RightInner>
                     <FriendList />
-                    <GroupList />
                 </RightInner>
             </RightSection>
         </>

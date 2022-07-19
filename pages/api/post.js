@@ -1,7 +1,7 @@
 import { getSession } from "next-auth/react";
 import { ObjectId } from "bson";
 import { connectToDatabase } from "../../lib/mongodb";
-import { POST_MAX_CHARS, POST_RATE_LIMIT } from "../../globals";
+import { POST_MAX_CHARS, POST_RATE_LIMIT, POST_FEEDS } from "../../globals";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
@@ -10,7 +10,7 @@ export default async (req, res) => {
     if (session) {
         const {
             method,
-            query: { post, feed },
+            query: { feed },
         } = req;
 
         const { db } = await connectToDatabase();
@@ -20,12 +20,12 @@ export default async (req, res) => {
             case "GET":
                 let findQuery;
                 switch (feed) {
-                    case "public":
+                    case POST_FEEDS.PUBLIC:
                         findQuery = {};
                         break;
-                    case "friends":
-                    // Mongodb: find( { _id : { $in : [1,2,3,4] } } );
-                    // Search for friends
+                    case POST_FEEDS.FOLLOWING:
+                        findQuery = {};
+                        break;
                     default:
                         findQuery = { userId: ObjectId(_id) };
                 }
@@ -43,13 +43,12 @@ export default async (req, res) => {
                             },
                         },
                     ])
-                    .limit(10)
                     .sort({ date: -1 })
+                    .limit(50)
                     .toArray();
 
                 return res.status(200).json({
                     posts,
-                    info: req.query,
                 });
             case "POST":
                 // Post rate limiter (anti-spam)
@@ -65,8 +64,6 @@ export default async (req, res) => {
                     const dateDiff = new Date() - _post.date;
                     const secondsSinceLast = dateDiff / 1000;
 
-                    console.log(secondsSinceLast, POST_RATE_LIMIT);
-
                     if (secondsSinceLast < POST_RATE_LIMIT) {
                         return res.status(400).json({
                             error: "RATE_LIMITED",
@@ -75,8 +72,7 @@ export default async (req, res) => {
                     }
                 }
 
-                const parsedBody = JSON.parse(req.body);
-                const { post } = parsedBody;
+                const { post } = JSON.parse(req.body);
 
                 // Post characters length
                 if (post.length === 0 || post.length > POST_MAX_CHARS) {
@@ -96,6 +92,26 @@ export default async (req, res) => {
                 return res.status(200).json({
                     post: insertedPost,
                 });
+            case "DELETE":
+                const { postId } = JSON.parse(req.body);
+
+                // Check if this user owns the post
+                const deletedPost = await db
+                    .collection("posts")
+                    .deleteOne({
+                        _id: ObjectId(postId),
+                        userId: ObjectId(_id),
+                    });
+
+                return res.status(200).json({
+                    deleted: deletedPost,
+                });
+
+                return res.status(400).json({
+                    error: "NOT_ALLOWED",
+                });
+
+                break;
             default:
                 return res.status(400).json({
                     error: "INVALID_METHOD",

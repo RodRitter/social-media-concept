@@ -1,67 +1,94 @@
 import React, { useState, useEffect } from "react";
-import useSWR from "swr";
 import { useStore } from "../lib/StoreProvider";
-import { useSnackbar } from "../lib/SnackbarProvider";
+import { useFollows } from "./useFollows";
+import { POST_FEEDS } from "../globals";
 
-const STORE_KEY = "posts";
+const fetcher = (url, method, onResult) => {
+    fetch(url, {
+        method: method,
+        mode: "cors",
+    })
+        .then((result) => result.json())
+        .then(onResult);
+};
+
+const POSTS_STORE_KEY = "posts";
 
 export const usePosts = () => {
-    const [feedType, setFeedType] = useState("public");
-    const [fetchingPosts, setFetchingPosts] = useState(false);
     const { store, setStore } = useStore();
-    const { setSnackbarOpen, setSnackbarContent, setSnackbarVariant } =
-        useSnackbar();
+    const [loading, setLoading] = useState(false);
+    const [feedType, setFeedType] = useState(POST_FEEDS.PUBLIC);
+    const { getFollows } = useFollows();
 
-    const fetchPosts = (hard) => {
-        if (!fetchingPosts) {
-            if (hard) {
-                setStore(STORE_KEY, []);
-            }
-            setFetchingPosts(true);
-            fetch(`/api/post?feed=${feedType}`, {
-                method: "GET",
-                mode: "cors",
+    const fetchPosts = (callback) => {
+        setLoading(true);
+        fetch(`/api/post?feed=${feedType}`, {
+            method: "GET",
+            mode: "cors",
+        })
+            .then((result) => result.json())
+            .then((res) => {
+                setStore(POSTS_STORE_KEY, res.posts);
+                if (callback) callback(res);
             })
-                .then((result) => result.json())
-                .then((res) => {
-                    if (res.error) {
-                        setSnackbarVariant("error");
-                        setSnackbarContent(res.error);
-                        setSnackbarOpen(true);
-                    } else if (res.posts) {
-                        setStore(STORE_KEY, res.posts);
-                    }
-                })
-                .finally(() => {
-                    setFetchingPosts(false);
-                });
-        }
+            .finally(() => setLoading(false));
     };
 
-    const fetcher = () => fetchPosts();
-    const { data, error } = useSWR("/api/user", fetcher, {
-        refreshInterval: 5000,
-    });
+    useEffect(() => {
+        fetchPosts();
+        getFollows();
+    }, [feedType]);
 
-    const likePost = (postId) => {
+    const createPost = (post, callback) => {
+        setLoading(true);
+        fetch(`/api/post`, {
+            method: "POST",
+            mode: "cors",
+            body: JSON.stringify({ post }),
+        })
+            .then((result) => result.json())
+            .then((res) => {
+                if (callback) callback(res);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
+    const likePost = (postId, callback) => {
         fetch(`/api/like`, {
             method: "POST",
             mode: "cors",
             body: JSON.stringify({ postId }),
         })
             .then((result) => result.json())
+            .then((res) => callback(res));
+    };
+
+    const deletePost = (postId, callback) => {
+        setLoading(true);
+        fetch(`/api/post`, {
+            method: "DELETE",
+            mode: "cors",
+            body: JSON.stringify({ postId }),
+        })
+            .then((result) => result.json())
             .then((res) => {
-                fetchPosts();
+                if (callback) callback(res);
             })
-            .finally(() => {});
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     return {
-        fetchingPosts,
-        setFeedType,
-        feedType,
+        loading,
+        posts: store[POSTS_STORE_KEY],
         fetchPosts,
-        posts: store[STORE_KEY],
+        createPost,
         likePost,
+        feedType,
+        setFeedType,
+        deletePost,
     };
 };

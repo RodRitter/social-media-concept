@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useTheme } from "../lib/ThemeProvider";
 import { useSnackbar } from "../lib/SnackbarProvider";
 import { usePosts } from "../hooks/usePosts";
-import { POST_MAX_CHARS } from "../globals";
+import { POST_MAX_CHARS, ERROR_MSGS } from "../globals";
 import BadgeProfile from "../components/BadgeProfile";
 import TextArea from "../components/TextArea";
 import Panel from "../components/Panel";
@@ -68,7 +68,7 @@ const CreatePost = () => {
         useSnackbar();
 
     const { data: session, status } = useSession();
-    const { fetchPosts } = usePosts();
+    const { createPost, fetchPosts } = usePosts();
 
     const [value, setValue] = useState("");
     const [showHint, setShowHint] = useState(false);
@@ -88,30 +88,22 @@ const CreatePost = () => {
             event.preventDefault();
             // Post
             setPosting(true);
-            fetch(`/api/post`, {
-                method: "POST",
-                mode: "cors",
-                body: JSON.stringify({ post: value }),
-            })
-                .then((result) => result.json())
-                .then((res) => {
-                    setSnackbarOpen(false);
-                    if (res.error) {
-                        setSnackbarContent(res.error);
-                        setSnackbarVariant("error");
-                    } else {
-                        setSnackbarVariant("success");
-                        setSnackbarContent("Posted successfully!");
-                        // Remove text in input
-                        onValueChange("");
-                    }
+            createPost(value, (res) => {
+                setSnackbarOpen(false);
+                if (res.error) {
+                    setSnackbarContent(ERROR_MSGS[res.error] || res.error);
+                    setSnackbarVariant("error");
+                } else {
+                    setSnackbarVariant("success");
+                    setSnackbarContent("Posted successfully!");
+                    // Remove text in input
+                    onValueChange("");
+                }
 
-                    setSnackbarOpen(true);
-                })
-                .finally(() => {
-                    setPosting(false);
-                    fetchPosts();
-                });
+                setSnackbarOpen(true);
+                setPosting(false);
+                fetchPosts();
+            });
         }
     };
 

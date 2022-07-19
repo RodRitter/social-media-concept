@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import { ThumbsUp, Plus } from "react-feather";
+import { ThumbsUp, Plus, Trash2 } from "react-feather";
 import { useSession } from "next-auth/react";
 import { useTheme } from "../lib/ThemeProvider";
+import { useFollows } from "../hooks/useFollows";
+import { useModal } from "../hooks/useModal";
 import BadgeProfile from "../components/BadgeProfile";
 import Button from "../components/Button";
 
@@ -51,17 +53,62 @@ const ActionsSection = styled.div`
     align-items: center;
 
     > * {
-        margin-left: 20px;
+        margin-left: 10px;
+    }
+
+    svg {
+        width: 20px;
     }
 
     > button span {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 `;
 
-const Post = ({ likes, canAdd, author, date, likePost, children }) => {
+const DeleteButton = styled(Button)`
+    font-size: 1rem;
+    color: ${({ theme }) => theme.errorRed};
+    > svg {
+        margin: 0;
+    }
+`;
+
+const Post = ({
+    likes,
+    author,
+    date,
+    likePost,
+    children,
+    deletePost,
+    isFollowing,
+    getFollows,
+}) => {
     const { theme, setTheme } = useTheme();
     const { data: session, status } = useSession();
+    const { followUnfollow } = useFollows();
+    const { closeModal, setModal } = useModal();
+
+    const deletePrompt = () => {
+        setModal("Do you want to delete this post?", [
+            {
+                label: "Yes, delete it.",
+                onClick: () => {
+                    // Delete
+                    deletePost();
+                    // Close
+                    closeModal();
+                },
+                variant: "secondary",
+            },
+            {
+                label: "No thanks",
+                onClick: () => {
+                    closeModal();
+                },
+                variant: "secondary",
+            },
+        ]);
+    };
 
     const getDateString = (postDate) => {
         const diff = new Date() - new Date(postDate);
@@ -71,10 +118,11 @@ const Post = ({ likes, canAdd, author, date, likePost, children }) => {
         if (mins < 20) return "a few minutes ago";
         if (mins < 40) return "about half an hour ago";
         if (mins < 90) return "about an hour ago";
-        if (mins / 24 < 1) return "about an day ago";
-        if (mins / 24 < 24) return `about ${Math.ceil(mins / 24)} hours ago`;
+        if (mins / 60 / 24 < 1) return "about a day ago";
+        if (mins / 60 / 24 < 24)
+            return `about ${Math.ceil(mins / 60)} hours ago`;
 
-        return `about ${Math.floor(mins / 60 / 24)} days ago`;
+        return `about ${Math.ceil(mins / 60 / 24)} days ago`;
     };
 
     const likeButtonVariant = () => {
@@ -93,9 +141,24 @@ const Post = ({ likes, canAdd, author, date, likePost, children }) => {
                         onClick={() => {}}
                     />
                 )}
-                {canAdd && (
-                    <FollowButton variant="link" icon={<Plus />}>
-                        Add Friend
+                {session.user._id === author._id && (
+                    <DeleteButton
+                        variant="link"
+                        theme={theme}
+                        onClick={deletePrompt}
+                    >
+                        <Trash2 />
+                    </DeleteButton>
+                )}
+                {session.user._id !== author._id && (
+                    <FollowButton
+                        variant="link"
+                        icon={<Plus />}
+                        onClick={() =>
+                            followUnfollow(author._id, () => getFollows())
+                        }
+                    >
+                        {isFollowing ? "Unfollow" : "Follow"}
                     </FollowButton>
                 )}
             </PostInfoWrapper>

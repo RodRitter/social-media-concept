@@ -1,19 +1,45 @@
-import { useSession, signIn, signOut } from "next-auth/react";
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useTheme } from "../lib/ThemeProvider";
+import { themes } from "../globals";
+import { useSession } from "next-auth/react";
 
-export default function Component() {
-  const { data: session } = useSession();
-  if (session) {
+import Header from "../containers/Header";
+import LoggedFeed from "../containers/LoggedFeed";
+
+const FeedWrapper = styled.div`
+    background: ${({ theme }) => theme.mainBackground};
+    color: ${({ theme }) => theme.text};
+    height: 100%;
+    overflow: auto;
+`;
+
+const InnerWrapper = styled.div`
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+
+    > div {
+        padding: 10px 20px;
+    }
+`;
+
+const Feed = ({ className }) => {
+    const { theme, setTheme } = useTheme();
+    const { data: session, status } = useSession();
+
+    const toggle = () => {
+        setTheme(theme === themes.dark ? themes.light : themes.dark);
+    };
+
     return (
-      <>
-        Signed in as {session.user.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
+        <FeedWrapper theme={theme} className={className}>
+            <Header session={false} authenticating={status === "loading"} />
+            <InnerWrapper>
+                Landing page. Make it look good roddy boy.
+            </InnerWrapper>
+        </FeedWrapper>
     );
-  }
-  return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
-  );
-}
+};
+
+export default Feed;

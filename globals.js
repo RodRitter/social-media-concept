@@ -1,8 +1,22 @@
 export const POST_RATE_LIMIT = 30; // Minimum wait time between posts
 export const POST_MAX_CHARS = 200;
+export const FEED_REFRESH_INTERVAL = 3000;
+export const POST_FEEDS = {
+    PUBLIC: "public",
+    FOLLOWING: "following",
+    USER: "user",
+};
+export const ERROR_MSGS = {
+    RATE_LIMITED: `Whoah, hold on there! You can only post every ${POST_RATE_LIMIT} seconds.`,
+};
+
+// Keys
+export const POSTS_STORE_KEY = "posts";
 
 export const themes = {
     dark: {
+        errorRed: "#C92F45",
+        successGreen: "#3bab5b",
         mainBackground: "#111111",
         card: "#1D1D22",
         text: "#ffffff",
