@@ -36,7 +36,6 @@ const FriendList = () => {
                         size="lg"
                         img={user.image}
                         topText={user.name}
-                        onClick={() => {}}
                     />
                 ))}
 
