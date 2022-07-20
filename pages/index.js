@@ -22,6 +22,7 @@ const InnerWrapper = styled.div`
     p,
     li {
         color: ${({ theme }) => theme.lightText};
+        text-align: justify;
     }
 
     h2 {
@@ -30,7 +31,7 @@ const InnerWrapper = styled.div`
 
     > div {
         padding: 10px 20px;
-        width: 50%;
+        width: 75%;
     }
 `;
 
@@ -51,15 +52,13 @@ const Feed = ({ className }) => {
                     <h1>crowdly - a social media experiment</h1>
                     <h2>Why did I build this?</h2>
                     <p>
-                        {`I wanted to challenge myself to build a simple vertical
-                        slice, full-stack application. The idea is that there is
-                        no "mock" data and it could be scaled into a production
-                        application with little effort.`}
+                        It was a challenge to develop an end-to-end application
+                        that is interactive and uses real data.
                     </p>
                     <h2>What was used?</h2>
                     <ul>
                         <li>
-                            NextJS - A React front-end framework for server-side
+                            NextJS - A React-based framework for server-side
                             rendering
                         </li>
                         <li>
@@ -68,8 +67,9 @@ const Feed = ({ className }) => {
                         </li>
                         <li>
                             MongoDB - A no-SQL database. Specifically I used
-                            Atlas, a cloud-based solution
+                            Atlas, their cloud-based solution
                         </li>
+                        <li>Deployed with Vercel</li>
                     </ul>
                 </div>
             </InnerWrapper>

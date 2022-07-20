@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Users } from "react-feather";
 import { signIn, signOut } from "next-auth/react";
 import { useTheme } from "../lib/ThemeProvider";
+import { Loader } from "react-feather";
 import BadgeProfile from "../components/BadgeProfile";
 import Panel from "../components/Panel";
 import Button from "../components/Button";
@@ -101,6 +102,30 @@ const BrandLogo = styled.div`
     align-items: center;
 `;
 
+const loaderRotate = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+`;
+
+const SessionLoader = styled.div`
+    position: relative;
+    font-size: 16px;
+    text-align: center;
+
+    > svg {
+        width: 20px;
+        height: 20px;
+        position: relative;
+        top: 30%;
+        transform: translateY(-50%);
+        animation: ${loaderRotate} 0.8s linear infinite;
+    }
+`;
+
 const Header = ({ session, authenticating }) => {
     const { theme } = useTheme();
     const [tooltipOpen, setTooltipOpen] = useState(true);
@@ -115,6 +140,13 @@ const Header = ({ session, authenticating }) => {
                     </BrandLogo>
                     <BrandByline>An experiment by Rod Ritter</BrandByline>
                 </Brand>
+
+                {authenticating && (
+                    <SessionLoader>
+                        <Loader />
+                        <div>Checking for session</div>
+                    </SessionLoader>
+                )}
 
                 {!authenticating && (
                     <ProfilePanel>
@@ -158,12 +190,12 @@ const Header = ({ session, authenticating }) => {
                                     >
                                         <h1>Sign in here ☝️</h1>
                                         <p>
-                                            The only Google account data that I
-                                            use is: Name, Email, Profile Image.
+                                            The only Google account data that is
+                                            used: Name, Email, Profile Image.
                                         </p>
                                         <p>
-                                            OR, if you don't want to use your
-                                            own account:
+                                            {`OR, if you don't want to use your
+                                            own account:`}
                                         </p>
 
                                         <GuestSignInButton
