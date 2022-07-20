@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import { ThumbsUp, Plus, Trash2 } from "react-feather";
+import { ThumbsUp, Plus, Trash2, Loader } from "react-feather";
 import { useSession } from "next-auth/react";
 import { useTheme } from "../lib/ThemeProvider";
 import { useFollows } from "../hooks/useFollows";
@@ -53,11 +53,11 @@ const ActionsSection = styled.div`
     align-items: center;
 
     > * {
-        margin-left: 10px;
+        margin-left: 20px;
     }
 
     svg {
-        width: 20px;
+        width: 15px;
     }
 
     > button span {
@@ -73,6 +73,41 @@ const DeleteButton = styled(Button)`
     }
 `;
 
+const loaderRotate = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+`;
+
+const loaderFadeIn = keyframes`
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+`;
+
+const LikeLoader = styled.div`
+    position: relative;
+    flex: 0;
+    width: 18px;
+    height: 40px;
+    animation: ${loaderFadeIn} 0.2s ease-in 1;
+
+    > svg {
+        width: 18px;
+        height: 18px;
+        position: relative;
+        top: 30%;
+        transform: translateY(-50%);
+        animation: ${loaderRotate} 0.8s linear infinite;
+    }
+`;
+
 const Post = ({
     likes,
     author,
@@ -82,10 +117,11 @@ const Post = ({
     deletePost,
     isFollowing,
     getFollows,
+    loadingLike,
 }) => {
     const { theme, setTheme } = useTheme();
     const { data: session, status } = useSession();
-    const { followUnfollow } = useFollows();
+    const { followUnfollow, loading } = useFollows();
     const { closeModal, setModal } = useModal();
 
     const deletePrompt = () => {
@@ -165,6 +201,11 @@ const Post = ({
             <PostPanel theme={theme}>{children}</PostPanel>
             {session && likes !== undefined && (
                 <ActionsSection>
+                    {loadingLike || loading ? (
+                        <LikeLoader>
+                            <Loader />
+                        </LikeLoader>
+                    ) : null}
                     <Button
                         variant={likeButtonVariant()}
                         icon={<ThumbsUp />}

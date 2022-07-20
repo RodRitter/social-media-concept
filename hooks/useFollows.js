@@ -6,6 +6,7 @@ import { useSnackbar } from "../lib/SnackbarProvider";
 const FOLLOWS_STORE_KEY = "following";
 
 export const useFollows = () => {
+    const [loading, setLoading] = useState(false);
     const { store, setStore, following, setFollowing } = useStore();
     const { setSnackbarOpen, setSnackbarContent, setSnackbarVariant } =
         useSnackbar();
@@ -28,6 +29,7 @@ export const useFollows = () => {
     };
 
     const followUnfollow = (userId, callback) => {
+        setLoading(true);
         fetch("/api/follow", {
             method: "POST",
             mode: "cors",
@@ -49,6 +51,7 @@ export const useFollows = () => {
                     setSnackbarOpen(true);
                 }
                 if (callback) callback(res);
+                setLoading(false);
             });
     };
 
@@ -57,5 +60,6 @@ export const useFollows = () => {
         getFollows,
         follows: following.follows || [],
         followData: following.followData || [],
+        loading,
     };
 };

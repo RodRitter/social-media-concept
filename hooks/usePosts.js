@@ -17,6 +17,7 @@ const POSTS_STORE_KEY = "posts";
 export const usePosts = () => {
     const { store, setStore } = useStore();
     const [loading, setLoading] = useState(false);
+    const [loadingLike, setLoadingLike] = useState(false);
     const [feedType, setFeedType] = useState(POST_FEEDS.PUBLIC);
     const { getFollows } = useFollows();
 
@@ -56,13 +57,17 @@ export const usePosts = () => {
     };
 
     const likePost = (postId, callback) => {
+        setLoadingLike(true);
         fetch(`/api/like`, {
             method: "POST",
             mode: "cors",
             body: JSON.stringify({ postId }),
         })
             .then((result) => result.json())
-            .then((res) => callback(res));
+            .then((res) => {
+                callback(res);
+                setLoadingLike(false);
+            });
     };
 
     const deletePost = (postId, callback) => {
@@ -87,6 +92,7 @@ export const usePosts = () => {
         fetchPosts,
         createPost,
         likePost,
+        loadingLike,
         feedType,
         setFeedType,
         deletePost,

@@ -24,7 +24,16 @@ export default async (req, res) => {
                         findQuery = {};
                         break;
                     case POST_FEEDS.FOLLOWING:
-                        findQuery = {};
+                        const userData = await db
+                            .collection("users")
+                            .findOne({ _id: ObjectId(_id) });
+
+                        const followIds = userData.following || [];
+                        const followObjIds = followIds.map((fid) =>
+                            ObjectId(fid)
+                        );
+
+                        findQuery = { userId: { $in: followObjIds } };
                         break;
                     default:
                         findQuery = { userId: ObjectId(_id) };
@@ -96,12 +105,10 @@ export default async (req, res) => {
                 const { postId } = JSON.parse(req.body);
 
                 // Check if this user owns the post
-                const deletedPost = await db
-                    .collection("posts")
-                    .deleteOne({
-                        _id: ObjectId(postId),
-                        userId: ObjectId(_id),
-                    });
+                const deletedPost = await db.collection("posts").deleteOne({
+                    _id: ObjectId(postId),
+                    userId: ObjectId(_id),
+                });
 
                 return res.status(200).json({
                     deleted: deletedPost,

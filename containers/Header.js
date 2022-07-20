@@ -156,17 +156,20 @@ const Header = ({ session, authenticating }) => {
                                         theme={theme}
                                         onClose={() => setTooltipOpen(false)}
                                     >
-                                        <h3>Create an account ☝️</h3>
+                                        <h3>Sign in? ☝️</h3>
                                         <p>
-                                            All new accounts are{" "}
-                                            <b>deleted daily</b>. Feel free to
-                                            play, break and test the demo.
+                                            Register with your Google account. I
+                                            try to remove and cleanup accounts
+                                            as often as possible.
                                         </p>
                                         <p>
-                                            I only have Google login for the
-                                            purpose of this demo.
+                                            The only Google account data that I
+                                            use is: Name, Email, Profile Image.
                                         </p>
-                                        <p>or</p>
+                                        <p>
+                                            OR, if you don't want to use your
+                                            own account:
+                                        </p>
 
                                         <GuestSignInButton
                                             variant="secondary"

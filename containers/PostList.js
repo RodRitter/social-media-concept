@@ -68,6 +68,7 @@ const PostList = ({ heading }) => {
         feedType,
         setFeedType,
         loading,
+        loadingLike,
     } = usePosts();
 
     const { getFollows, follows } = useFollows();
@@ -122,6 +123,7 @@ const PostList = ({ heading }) => {
                                         fetchPosts();
                                     });
                                 }}
+                                loadingLike={loadingLike}
                                 deletePost={() =>
                                     deletePost(post._id, () => fetchPosts())
                                 }
