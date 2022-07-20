@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "../lib/ThemeProvider";
 import { SnackbarProvider } from "../lib/SnackbarProvider";
@@ -12,6 +13,9 @@ export default function App({
 }) {
     return (
         <SessionProvider session={session}>
+            <Head>
+                <title>Crowdly - A social media experiment</title>
+            </Head>
             <StoreProvider>
                 <ThemeProvider>
                     <Modal />
