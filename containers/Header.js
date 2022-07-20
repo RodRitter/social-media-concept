@@ -202,8 +202,8 @@ const Header = ({ session, authenticating }) => {
                                     >
                                         <h1>Sign in here ☝️</h1>
                                         <p>
-                                            The only Google account data that is
-                                            used: Name, Email, Profile Image.
+                                            Only Name, Email & Profile Image is
+                                            accessed from your Google account.
                                         </p>
                                         <p>
                                             {`OR, if you don't want to use your
