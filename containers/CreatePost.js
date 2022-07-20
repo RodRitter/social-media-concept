@@ -17,6 +17,10 @@ const CreatePostWrapper = styled.div`
 const CreatePostInputWrapper = styled(Panel)`
     display: flex;
     position: relative;
+
+    @media screen and (max-width: 600px) {
+        padding-bottom: 40px;
+    }
 `;
 
 const TextAreaStyled = styled(TextArea)`
