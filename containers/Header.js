@@ -141,6 +141,7 @@ const SessionLoader = styled.div`
 const Header = ({ session, authenticating }) => {
     const { theme } = useTheme();
     const [tooltipOpen, setTooltipOpen] = useState(true);
+    const [loggingIn, setLoggingIn] = useState(false);
 
     return (
         <HeaderWrapper>
@@ -165,9 +166,13 @@ const Header = ({ session, authenticating }) => {
                         {session && (
                             <SignOutButton
                                 variant="secondary"
-                                onClick={() => signOut({ callbackUrl: "/" })}
+                                onClick={async () => {
+                                    setLoggingIn(true);
+                                    await signOut({ callbackUrl: "/" });
+                                    setLoggingIn(false);
+                                }}
                             >
-                                Sign Out
+                                {loggingIn ? "Signing out" : "Sign Out"}
                             </SignOutButton>
                         )}
 
@@ -185,13 +190,17 @@ const Header = ({ session, authenticating }) => {
                         ) : (
                             <SignInWrapper>
                                 <SignInButton
-                                    onClick={() =>
-                                        signIn("google", {
+                                    onClick={async () => {
+                                        setLoggingIn(true);
+                                        await signIn("google", {
                                             callbackUrl: "/feed",
-                                        })
-                                    }
+                                        });
+                                        setLoggingIn(false);
+                                    }}
                                 >
-                                    Sign in with Google
+                                    {loggingIn
+                                        ? "Signing in"
+                                        : "Sign in with Google"}
                                 </SignInButton>
 
                                 {tooltipOpen && (
@@ -212,14 +221,16 @@ const Header = ({ session, authenticating }) => {
 
                                         <GuestSignInButton
                                             variant="secondary"
-                                            onClick={() => {
-                                                signIn("credentials", {
+                                            onClick={async () => {
+                                                setLoggingIn(true);
+                                                await signIn("credentials", {
                                                     username: "guest",
                                                     callbackUrl: "/feed",
                                                 });
+                                                setLoggingIn(false);
                                             }}
                                         >
-                                            {authenticating
+                                            {loggingIn
                                                 ? "Logging in"
                                                 : "Demo Account Sign In"}
                                         </GuestSignInButton>
