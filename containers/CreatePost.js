@@ -39,6 +39,7 @@ const HintText = styled.div`
     display: flex;
     align-items: center;
     opacity: 0.8;
+    font-size: 0.9rem;
 `;
 
 const EnterKey = styled.div`
@@ -53,6 +54,7 @@ const CharLimitText = styled.div`
     position: absolute;
     top: 15px;
     right: 20px;
+    font-size: 0.9rem;
 `;
 
 const PostingLoader = styled(Loader)`
