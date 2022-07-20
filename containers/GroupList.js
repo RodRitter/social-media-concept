@@ -36,11 +36,6 @@ const GroupList = () => {
 
             <FeatureList theme={theme}>
                 <p>
-                    <span>Character Limit</span>: Posts have a character limit,
-                    which is displayed in the text input if you've entered more
-                    than 1 character.
-                </p>
-                <p>
                     <span>Rate/Spam Limiting</span>: There is a 30s wait time
                     between post updates to avoid spam. An notification will let
                     you know when you hit the rate limit.

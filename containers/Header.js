@@ -29,7 +29,7 @@ const Brand = styled.div`
     flex-direction: column;
 
     > div span {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         font-weight: bold;
     }
 
@@ -40,9 +40,10 @@ const Brand = styled.div`
 `;
 
 const BrandByline = styled.div`
-    opacity: 0.4;
+    opacity: 0.3;
     font-weight: 300;
     margin-top: 5px;
+    font-size: 0.9rem;
 `;
 
 const ProfilePanel = styled.div`
