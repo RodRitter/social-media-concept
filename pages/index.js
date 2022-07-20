@@ -15,13 +15,13 @@ const FeedWrapper = styled.div`
 `;
 
 const InnerWrapper = styled.div`
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
 
     p,
     li {
-        font-size: 1.1rem;
+        font-size: 1rem;
         color: ${({ theme }) => theme.lightText};
     }
 

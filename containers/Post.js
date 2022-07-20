@@ -41,7 +41,7 @@ const FollowButton = styled(Button)`
 `;
 
 const PostPanel = styled.div`
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding: 10px;
     color: ${({ theme }) => theme.mediumText};
 `;

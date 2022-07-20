@@ -49,7 +49,7 @@ const Loading = styled.div`
     height: 80px;
     display: flex;
     align-items: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
     animation: ${loadingIntro} 0.1s ease-in-out;
 
     > span {

@@ -15,7 +15,7 @@ const HeaderWrapper = styled(Panel)`
 `;
 
 const HeaderInner = styled.div`
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;

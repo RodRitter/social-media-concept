@@ -16,12 +16,12 @@ const FeedWrapper = styled.div`
 `;
 
 const InnerWrapper = styled.div`
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
 
     > div {
-        padding: 10px 20px;
+        padding: 10px;
     }
 `;
 

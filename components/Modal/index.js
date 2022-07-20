@@ -40,7 +40,7 @@ const ModalInner = styled.div`
 const ContentWrapper = styled.div`
     padding: 0 0 40px 0;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
 `;
 
 const ButtonsWrapper = styled.div`
