@@ -18,7 +18,7 @@ const HeaderWrapper = styled(Panel)`
 const HeaderInner = styled.div`
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 100px;
+    padding: 0 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -51,6 +51,12 @@ const ProfilePanel = styled.div`
     align-items: center;
 `;
 
+const StyledBadgeProfile = styled(BadgeProfile)`
+    @media screen and (max-width: 1000px) {
+        display: none;
+    }
+`;
+
 const SignOutButton = styled(Button)`
     margin-right: 20px;
 `;
@@ -78,6 +84,7 @@ const TooltipStyled = styled(Tooltip)`
     left: 50%;
     transform: translateX(-50%);
     width: 300px;
+    transition: all linear 0.1s;
     animation: ${tooltipBounce} 1.5s ease-in-out infinite;
 
     > p {
@@ -90,6 +97,10 @@ const TooltipStyled = styled(Tooltip)`
                 color: ${({ theme }) => theme.text};
             }
         }
+    }
+
+    @media screen and (max-width: 1400px) {
+        left: -20px;
     }
 `;
 
@@ -160,7 +171,7 @@ const Header = ({ session, authenticating }) => {
                         )}
 
                         {session ? (
-                            <BadgeProfile
+                            <StyledBadgeProfile
                                 img={session.user.image}
                                 topText={session.user.name}
                                 bottomText={

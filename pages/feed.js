@@ -18,10 +18,15 @@ const FeedWrapper = styled.div`
 const InnerWrapper = styled.div`
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
     display: flex;
 
     > div {
         padding: 10px;
+    }
+
+    @media screen and (max-width: 1000px) {
+        flex-direction: column;
     }
 `;
 

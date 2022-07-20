@@ -32,6 +32,10 @@ const InnerWrapper = styled.div`
     > div {
         padding: 10px 20px;
         width: 75%;
+
+        @media screen and (max-width: 1000px) {
+            width: 100%;
+        }
     }
 `;
 
