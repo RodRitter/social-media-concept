@@ -79,7 +79,6 @@ const TooltipStyled = styled(Tooltip)`
     animation: ${tooltipBounce} 1.5s ease-in-out infinite;
 
     > p {
-        font-size: 1rem;
         color: ${({ theme }) => theme.lightText};
 
         a {

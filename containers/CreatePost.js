@@ -21,7 +21,6 @@ const CreatePostInputWrapper = styled(Panel)`
 
 const TextAreaStyled = styled(TextArea)`
     flex: 1;
-    font-size: 1rem;
     margin-top: 25px;
     transition: all linear 0.1s;
 
@@ -46,7 +45,6 @@ const EnterKey = styled.div`
     height: 24px;
     padding: 0 5px;
     border-radius: 2px;
-    font-size: 1rem;
     border: 1px solid ${({ theme }) => theme.text};
 `;
 
@@ -54,7 +52,6 @@ const CharLimitText = styled.div`
     position: absolute;
     top: 15px;
     right: 20px;
-    font-size: 0.9rem;
 `;
 
 const PostingLoader = styled(Loader)`

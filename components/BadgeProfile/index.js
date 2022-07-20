@@ -33,13 +33,13 @@ const ProfileDetails = styled.div`
 
 const NameText = styled.div`
     font-weight: 500;
-    font-size: ${({ size }) => (size === "lg" ? "1.05rem" : "1rem")};
+    font-size: ${({ size }) => (size === "lg" ? "1.05rem" : "0.9rem")};
     line-height: ${({ size }) => (size === "lg" ? "1.8rem" : "1.4rem")};
 `;
 
 const MetaText = styled.div`
     color: ${({ theme }) => theme.lightText};
-    font-size: ${({ size }) => (size === "lg" ? "1rem" : "0.9rem")};
+    font-size: ${({ size }) => (size === "lg" ? "0.9rem" : "0.9rem")};
     line-height: ${({ size }) => (size === "lg" ? "1.8rem" : "1.4rem")};
 `;
 

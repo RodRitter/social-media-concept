@@ -41,7 +41,6 @@ const FollowButton = styled(Button)`
 `;
 
 const PostPanel = styled.div`
-    font-size: 1rem;
     padding: 10px;
     color: ${({ theme }) => theme.mediumText};
 `;
@@ -59,14 +58,9 @@ const ActionsSection = styled.div`
     svg {
         width: 15px;
     }
-
-    > button span {
-        font-size: 1rem;
-    }
 `;
 
 const DeleteButton = styled(Button)`
-    font-size: 1rem;
     color: ${({ theme }) => theme.errorRed};
     > svg {
         margin: 0;

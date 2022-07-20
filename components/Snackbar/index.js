@@ -18,7 +18,6 @@ const SnackbarWrapper = styled.div`
     border-radius: 5px;
     position: relative;
     width: fit-content;
-    font-size: 1rem;
     transition: all ease-in-out 0.3s;
     top: ${({ open }) => (open ? "40px" : "-70px")};
 `;

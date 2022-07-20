@@ -4,7 +4,6 @@ import { useTheme } from "../../lib/ThemeProvider";
 
 const ButtonStyled = styled.button`
     border: none;
-    font-size: 1rem;
     height: 40px;
     padding: 0 15px;
     border-radius: 5px;

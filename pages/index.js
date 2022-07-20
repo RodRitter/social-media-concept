@@ -21,7 +21,6 @@ const InnerWrapper = styled.div`
 
     p,
     li {
-        font-size: 1rem;
         color: ${({ theme }) => theme.lightText};
     }
 
