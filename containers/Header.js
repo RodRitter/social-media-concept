@@ -17,6 +17,7 @@ const HeaderWrapper = styled(Panel)`
 const HeaderInner = styled.div`
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -155,12 +156,7 @@ const Header = ({ session, authenticating }) => {
                                         theme={theme}
                                         onClose={() => setTooltipOpen(false)}
                                     >
-                                        <h3>Sign in? ☝️</h3>
-                                        <p>
-                                            Register with your Google account. I
-                                            try to remove and cleanup accounts
-                                            as often as possible.
-                                        </p>
+                                        <h1>Sign in here ☝️</h1>
                                         <p>
                                             The only Google account data that I
                                             use is: Name, Email, Profile Image.
