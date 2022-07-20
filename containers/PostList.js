@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
+
+import { Loader } from "react-feather";
 import { usePosts } from "../hooks/usePosts";
 import { useTheme } from "../lib/ThemeProvider";
 import { useFollows } from "../hooks/useFollows";
@@ -44,17 +46,32 @@ const loadingIntro = keyframes`
   }
 `;
 
+const loadingSpinner = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+`;
+
 const Loading = styled.div`
     overflow: hidden;
     height: 80px;
-    display: flex;
-    align-items: center;
+    font-size: 1rem;
     animation: ${loadingIntro} 0.1s ease-in-out;
+    text-align: center;
 
-    > span {
-        flex: 1;
-        text-align: center;
+    > div {
         color: ${({ theme }) => theme.lightText};
+        line-height: 20px;
+        margin-left: 10px;
+    }
+
+    > svg {
+        width: 20px;
+        height: 20px;
+        animation: ${loadingSpinner} 1.2s linear infinite;
     }
 `;
 
@@ -105,7 +122,8 @@ const PostList = ({ heading }) => {
             <PostsWrapper>
                 {loading && (
                     <Loading theme={theme}>
-                        <span>Fetching posts</span>
+                        <Loader />
+                        <div>Fetching posts</div>
                     </Loading>
                 )}
                 {posts &&

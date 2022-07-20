@@ -21,7 +21,8 @@ const CreatePostInputWrapper = styled(Panel)`
 
 const TextAreaStyled = styled(TextArea)`
     flex: 1;
-    margin-top: 25px;
+    margin-top: 28px;
+    font-size: 1.1rem;
     transition: all linear 0.1s;
 
     ${({ posting }) => posting && "opacity: 0.5;"}
