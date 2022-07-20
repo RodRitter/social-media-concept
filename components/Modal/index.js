@@ -35,6 +35,11 @@ const ModalInner = styled.div`
     transform: translate(-50%, -50%);
     padding: 20px;
     border-radius: 10px;
+
+    @media screen and (max-width: 1000px) {
+        width: 100%;
+        max-width: 240px;
+    }
 `;
 
 const ContentWrapper = styled.div`
