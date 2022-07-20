@@ -32,8 +32,7 @@ const InnerWrapper = styled.div`
 
 const Feed = ({ className }) => {
     const { theme, setTheme } = useTheme();
-    const { data: session, status } = useSession();
-    usePosts();
+    const { data: session, status, loading } = useSession();
 
     const toggle = () => {
         setTheme(theme === themes.dark ? themes.light : themes.dark);
@@ -41,11 +40,9 @@ const Feed = ({ className }) => {
 
     return (
         <FeedWrapper theme={theme} className={className}>
-            <Header session={session} authenticating={status === "loading"} />
+            <Header session={session} authenticating={loading} />
             <InnerWrapper>
-                {session && (
-                    <LoggedFeed authenticating={status === "loading"} />
-                )}
+                {session && <LoggedFeed authenticating={loading} />}
             </InnerWrapper>
         </FeedWrapper>
     );
