@@ -52,10 +52,10 @@ const Feed = ({ className }) => {
                     <h1>crowdly - a social media experiment</h1>
                     <h2>Why did I build this?</h2>
                     <p>
-                        I wanted to challenge myself to build a simple vertical
+                        {`I wanted to challenge myself to build a simple vertical
                         slice, full-stack application. The idea is that there is
                         no "mock" data and it could be scaled into a production
-                        application with little effort.
+                        application with little effort.`}
                     </p>
                     <h2>What was used?</h2>
                     <ul>
