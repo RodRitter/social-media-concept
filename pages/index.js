@@ -59,22 +59,6 @@ const Feed = ({ className }) => {
                         It was a challenge to develop an end-to-end application
                         that is interactive and uses real data.
                     </p>
-                    <h2>What was used?</h2>
-                    <ul>
-                        <li>
-                            NextJS - A React-based framework for server-side
-                            rendering
-                        </li>
-                        <li>
-                            NextAuth - A plugin for NextJS, making it easy to
-                            implement user authentication
-                        </li>
-                        <li>
-                            MongoDB - A no-SQL database. Specifically I used
-                            Atlas, their cloud-based solution
-                        </li>
-                        <li>Deployed with Vercel</li>
-                    </ul>
                 </div>
             </InnerWrapper>
         </FeedWrapper>
