@@ -19,7 +19,7 @@ const CardHeading = styled.h2`
 const EmptyMessage = styled.div`
     font-size: 1rem;
     color: gray;
-    padding: 20px 0;
+    padding: 10px 0 20px 0;
     text-align: center;
 `;
 
