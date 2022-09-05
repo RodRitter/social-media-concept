@@ -72,6 +72,7 @@ const Feed = ({ className }) => {
         <FeedWrapper theme={theme} className={className}>
             <Header session={false} authenticating={status === "loading"} />
             <InnerWrapper theme={theme}>
+                <h1>Crowdly - social media experiment</h1>
                 <h1>Demo Features</h1>
                 <FeatureRow>
                     <FeatureText>
