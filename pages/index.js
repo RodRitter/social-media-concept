@@ -17,25 +17,45 @@ const FeedWrapper = styled.div`
 const InnerWrapper = styled.div`
     max-width: 1200px;
     margin: 0 auto;
+
+    > h1 {
+        margin-bottom: 40px;
+    }
+`;
+
+const FeatureRow = styled.div`
     display: flex;
-
-    p,
-    li {
-        color: ${({ theme }) => theme.lightText};
-        text-align: justify;
-    }
-
-    h2 {
-        color: ${({ theme }) => theme.lightText};
-    }
+    padding-bottom: 20px;
+    max-width: 1000px;
 
     > div {
-        padding: 10px 20px;
-        width: 75%;
-
-        @media screen and (max-width: 1000px) {
-            width: 100%;
+        flex: 1;
+        &:first-child {
+            margin-right: 20px;
         }
+    }
+`;
+
+const FeatureImageWrapper = styled.div`
+    position: relative;
+
+    img {
+        width: 100%;
+    }
+`;
+
+const FeatureText = styled.div`
+    margin-bottom: 10px;
+    h1 {
+        font-size: 20px;
+        margin-bottom: 5px;
+        color: #008dfa;
+        font-weight: normal;
+    }
+
+    p {
+        font-size: 18px;
+        margin: 0;
     }
 `;
 
@@ -52,14 +72,52 @@ const Feed = ({ className }) => {
         <FeedWrapper theme={theme} className={className}>
             <Header session={false} authenticating={status === "loading"} />
             <InnerWrapper theme={theme}>
-                <div>
-                    <h1>crowdly - a social media experiment</h1>
-                    <h2>Why did I build this?</h2>
-                    <p>
-                        It was a challenge to develop an end-to-end application
-                        that is interactive and uses real data.
-                    </p>
-                </div>
+                <h1>Demo Features</h1>
+                <FeatureRow>
+                    <FeatureText>
+                        <h1>Create a post</h1>
+                        <p>
+                            You can create a post which is added to the public
+                            feed. They are rate limited so you can post every 30
+                            seconds
+                        </p>
+                    </FeatureText>
+                    <FeatureImageWrapper>
+                        <img
+                            src="/img/features/feature-posts.png"
+                            alt="feature-1"
+                        />
+                    </FeatureImageWrapper>
+                </FeatureRow>
+
+                <FeatureRow>
+                    <FeatureImageWrapper>
+                        <img
+                            src="/img/features/feature-like.png"
+                            alt="feature-1"
+                        />
+                    </FeatureImageWrapper>
+                    <FeatureText>
+                        <h1>Like posts</h1>
+                        <p>You can like other users posts</p>
+                    </FeatureText>
+                </FeatureRow>
+
+                <FeatureRow>
+                    <FeatureText>
+                        <h1>Post feeds & filtering</h1>
+                        <p>
+                            You are able to filter your post feed by your own,
+                            your follows, or the public feed.
+                        </p>
+                    </FeatureText>
+                    <FeatureImageWrapper>
+                        <img
+                            src="/img/features/feature-filtering.png"
+                            alt="feature-1"
+                        />
+                    </FeatureImageWrapper>
+                </FeatureRow>
             </InnerWrapper>
         </FeedWrapper>
     );
