@@ -25,7 +25,7 @@ const InnerWrapper = styled.div`
 
 const FeatureRow = styled.div`
     display: flex;
-    padding-bottom: 20px;
+    padding-bottom: 60px;
     max-width: 1000px;
 
     > div {
