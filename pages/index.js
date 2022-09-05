@@ -39,8 +39,17 @@ const FeatureRow = styled.div`
 const FeatureImageWrapper = styled.div`
     position: relative;
 
+    padding-right: 30px;
+    &:nth-child(even) {
+        padding-left: 30px;
+    }
+
     img {
         width: 100%;
+        box-shadow: 0px 0px 15px 0px rgba(110, 110, 110, 0.2);
+        -webkit-box-shadow: 0px 0px 15px 0px rgba(110, 110, 110, 0.2);
+        -moz-box-shadow: 0px 0px 15px 0px rgba(110, 110, 110, 0.2);
+        border-radius: 15px;
     }
 `;
 
