@@ -27,6 +27,7 @@ const FeatureRow = styled.div`
     display: flex;
     padding-bottom: 60px;
     max-width: 1000px;
+    align-items: center;
 
     > div {
         flex: 1;
@@ -46,9 +47,6 @@ const FeatureImageWrapper = styled.div`
 
     img {
         width: 100%;
-        box-shadow: 0px 0px 15px 0px rgba(110, 110, 110, 0.2);
-        -webkit-box-shadow: 0px 0px 15px 0px rgba(110, 110, 110, 0.2);
-        -moz-box-shadow: 0px 0px 15px 0px rgba(110, 110, 110, 0.2);
         border-radius: 15px;
     }
 `;
@@ -101,16 +99,16 @@ const Feed = ({ className }) => {
                 </FeatureRow>
 
                 <FeatureRow>
+                    <FeatureText>
+                        <h1>Like posts</h1>
+                        <p>You can like other users posts</p>
+                    </FeatureText>
                     <FeatureImageWrapper>
                         <img
                             src="/img/features/feature-like.png"
                             alt="feature-1"
                         />
                     </FeatureImageWrapper>
-                    <FeatureText>
-                        <h1>Like posts</h1>
-                        <p>You can like other users posts</p>
-                    </FeatureText>
                 </FeatureRow>
 
                 <FeatureRow>
